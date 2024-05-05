@@ -1,37 +1,31 @@
 'use client'
-import BlockItem from '@/component/Block';
 import ButtonLink from '@/component/button';
 import '../step1/style.css'
-import { useFormContext } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
+import BlockMail from './blockMail';
+import { useFormContext } from 'react-hook-form';
 
 export default function Page2() {
-
+  const { getValues, formState: { defaultValues , isValid} } = useFormContext()
   const router = useRouter()
-  
+
+  console.log('defaultValues', defaultValues)
+
   const nextPage = () => {
-   
-
-      router.push('/result')
-    
+    router.push('/step3')
   }
+  const prevPage = () => {
+    router.back()
+  }
+  console.log('valueFirs', getValues('firstname'))
   return (
-    <form action="/action_page.php">
-      <BlockItem title="Block thu 1 step 2" nameBlock='mail'>
+    <div>
+      <p>Value lastName: {getValues('firstname')}</p>
+      {isValid ? 'True' : 'False'}
+      <BlockMail />
 
-        <label htmlFor="email">Email</label>
-        <input type="text" id="email" name="email" placeholder="Email.." />
-
-        <label htmlFor="age">Age</label>
-        <input type="text" id="age" name="age" placeholder="Your age.." />
-      </BlockItem>
-
-      <BlockItem title="Block thu 2 step 2" nameBlock='des'>
-        <label htmlFor="subject">Description</label>
-        <textarea id="description" name="description" placeholder="Write Description.." ></textarea>
-      </BlockItem>
-      {/* <ButtonLink text='Previous' onClick={}/> */}
-      <ButtonLink text='Next' onClick={nextPage}/>
-    </form>
+      <ButtonLink text='Previous' onClick={prevPage}/>
+      <ButtonLink text='Next' onClick={nextPage} />
+    </div>
   );
 }

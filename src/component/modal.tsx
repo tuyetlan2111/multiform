@@ -1,9 +1,10 @@
 import React, { Ref } from "react";
 import { ReactNode } from "react"
 
-export const Modal = ({ children, ref }: { children: ReactNode, ref: Ref<HTMLDivElement> }) => {
+export const Modal = ({ children , closeModal}: { children: ReactNode , closeModal: () => void}) => {
   return (
-    <div ref={ref}>
+    <div>
+      <button className="close-modal" onClick={closeModal}>Close Modal</button>
       {children}
     </div>
   )

@@ -1,12 +1,18 @@
 "use client"
-import { Provider } from "react-redux";
-import { store } from "./store";
-import { persistStore } from "redux-persist";
 import { FormProvider, useForm } from "react-hook-form";
 import { Step1Schema } from "@/types/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-persistStore(store);
+export const defaultValues = {
+  firstname: '',
+  lastname: '',
+  country: '',
+  subject: '',
+  income: '',
+  // firstNames0: '',
+  // lastNames0: '',
+  // seiNames0: '',
+}
 
 export default function ReduxProvider({
   children,
@@ -16,21 +22,15 @@ export default function ReduxProvider({
   let activeStep = 0
   const currentValidationSchema = Step1Schema[activeStep];
   const methods = useForm({
-    defaultValues:  {
-      firstname: '',
-      lastname: '',
-      country: '',
-      subject: '',
-      income: '',
-      check: false
-    },
-    mode: 'onChange',
+    defaultValues: defaultValues,
+    mode: 'onBlur',
     reValidateMode: 'onChange',
     resolver: zodResolver(currentValidationSchema)
   })
-  return <Provider store={store}>
+  return (
     <FormProvider {...methods}>
       {children}
+      {/* <DevTool control={methods.control} /> */}
     </FormProvider>
-  </Provider>;
+  )
 }

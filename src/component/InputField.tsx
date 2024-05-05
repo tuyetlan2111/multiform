@@ -1,9 +1,10 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 
 export default function InputField({ name }: { name: string }) {
   const { control, formState: { errors } } = useFormContext();
   const error = errors[name as string]?.message
+
   return (
     <Controller
       control={control}
@@ -14,9 +15,10 @@ export default function InputField({ name }: { name: string }) {
             onChange={onChange}
             onBlur={onBlur}
             value={value}
+            id={name}
             style={error ? { border: '1px solid red' } : { border: '1px solid #000000' }}
             placeholder="Your name.." />
-         
+            <p>{errors[name as string]?.message as ReactNode}</p>
         </>
 
       )}
