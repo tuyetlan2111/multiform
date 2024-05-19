@@ -1,27 +1,46 @@
-import { z } from "zod";
+import { custom, z } from "zod";
 
-const numFields = 5
+// const validateFamily = z.object({
+//   firstName: z.string().min(2, { message: "Vui long nhap" }),
+//   meifirstName: z.string().min(2, { message: "Vui long nhap" }),
+//   cardEngFirstName: z.string().min(2, { message: "Vui long nhap" }),
+//   cardEngLastName: z.string().min(2, { message: "Vui long nhap" }),
+//   relationship: z.string().min(2, { message: "Vui long nhap" }),
+//   dobYear: z.string().min(2, { message: "Vui long nhap" }),
+//   dobMonth: z.string().min(2, { message: "Vui long nhap" }),
+//   dobDate: z.string().min(2, { message: "Vui long nhap" }),
+//   PINnumber: z.string().min(2, { message: "Vui long nhap" }),
+//   PINnumberConfirm: z.string().min(2, { message: "Vui long nhap" }),
+// })
+
+// export const typeDiscriminatorSchema = z.discriminatedUnion("familyNumber", [
+//   z.object({
+//     familyNumber: z.literal(0),
+//   }),
+//   z.object({
+//     familyNumber: z.literal(1),
+//   }),
+//   z.object({
+//     familyNumber: z.literal(2),
+//   }),
+// ]);
 
 export const Step1Schema = [
 
-  // z.object({
-  //   firstname: z.string().min(1, { message: 'Chua it nhat 1 text' }),
-  //   lastname: z.string().min(1, { message: 'Chua it nhat 1 text' }),
-  //   country: z.string().min(1, { message: 'Chua it nhat 1 text' }),
-  //   subject: z.string().min(1, { message: 'Chua it nhat 1 text' }),
-
-  // }),
-  // z.object({
-  //   email: z.string().email(),
-  //   age: z.string().min(1, { message: 'Nhap tuoi' })
-  // }),
-  z.object(
-    Object.fromEntries(
-      Array.from({ length: numFields }, (_, i) => [
-        `firstNames${i}`, z.string().min(1, { message: `firstName${i} cannot be empty` }),
-        `lastNames${i}`, z.string().min(1, { message: `lastNames${i} cannot be empty` })
-      ]).flat()
-    )
-
-  )
+  z.object({
+    boxConfirm: z.boolean(),
+    familyCard: z.object({
+      firstName: z.string().min(2, { message: "Vui long nhap" }),
+      meifirstName: z.string().min(2, { message: "Vui long nhap" }),
+      cardEngFirstName: z.string().min(2, { message: "Vui long nhap" }),
+      cardEngLastName: z.string().min(2, { message: "Vui long nhap" }),
+      relationship: z.string().min(2, { message: "Vui long nhap" }),
+      dobYear: z.string().min(2, { message: "Vui long chọn" }),
+      dobMonth: z.string().min(2, { message: "Vui long chọn" }),
+      dobDate: z.string().min(2, { message: "Vui long chọn" }),
+      PINnumber: z.string().min(2, { message: "Vui long nhap" }),
+      PINnumberConfirm: z.string().min(2, { message: "Vui long nhap" }),
+    }).array()
+  })
 ]
+

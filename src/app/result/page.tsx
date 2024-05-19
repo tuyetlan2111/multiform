@@ -2,7 +2,6 @@
 import { Modal } from "@/component/modal";
 import { useRef, useState } from "react";
 import { useFormContext } from "react-hook-form"
-import BlockName from "../step1/component1";
 
 export default function Result() {
   const { getValues, setValue } = useFormContext()
@@ -49,12 +48,7 @@ export default function Result() {
         </div>
 
       </div>
-      {
-        show && <Modal closeModal={closeModal}>
-          <BlockName />
-          <button onClick={() => updateFieldModal('firstname', 'Tran')}>Update Modal</button>
-        </Modal>
-      }
+
 
     </div>
   )

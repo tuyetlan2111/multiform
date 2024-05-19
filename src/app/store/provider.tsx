@@ -4,14 +4,23 @@ import { Step1Schema } from "@/types/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 export const defaultValues = {
-  firstname: '',
-  lastname: '',
-  country: '',
-  subject: '',
-  income: '',
-  // firstNames0: '',
-  // lastNames0: '',
-  // seiNames0: '',
+  boxConfirm: false,
+  familyCard: [
+    {
+      familyNumber: 0,
+      firstName: "",
+      meifirstName: "",
+      cardEngFirstName: "",
+      cardEngLastName: "",
+      relationship: "",
+      dobYear: "",
+      dobMonth: "",
+      dobDate: "",
+      // gender: "",
+      PINnumber: "",
+      PINnumberConfirm: "",
+    }
+  ],
 }
 
 export default function ReduxProvider({
@@ -23,8 +32,8 @@ export default function ReduxProvider({
   const currentValidationSchema = Step1Schema[activeStep];
   const methods = useForm({
     defaultValues: defaultValues,
-    mode: 'onBlur',
-    reValidateMode: 'onChange',
+    mode: 'onChange',
+    reValidateMode: 'onBlur',
     resolver: zodResolver(currentValidationSchema)
   })
   return (

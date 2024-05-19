@@ -4,7 +4,13 @@ import { Controller, useFormContext } from "react-hook-form"
 type SelectCProps = React.DetailedHTMLProps<
   React.SelectHTMLAttributes<HTMLSelectElement>,
   HTMLSelectElement
-> & { dataSelect: Array<string | number>, name: string, id: string, desDefault?: string | number, isDisabled?: boolean }
+> & {
+  dataSelect: Array<string | number>,
+  name: string, id: string,
+  desDefault?: string | number,
+  isDisabled?: boolean
+  handleChange: (e: any, name: string) => void
+}
 
 type Option = {
   label: React.ReactNode
@@ -16,7 +22,8 @@ type SelectProps = React.DetailedHTMLProps<
   HTMLSelectElement
 > & { options: Option[] }
 
-export const SelectField = React.forwardRef<HTMLSelectElement, SelectCProps>(({ id, dataSelect, name, desDefault = "ご利用希望枠を選択", isDisabled }, ref) => {
+export const SelectField = React.forwardRef<HTMLSelectElement, SelectCProps>(({ id, dataSelect, name,
+  desDefault = "ご利用希望枠を選択", isDisabled, handleChange }, ref) => {
   const { control, formState: { errors } } = useFormContext()
   const error = errors[name as string]?.message;
   const checkHasDes = typeof desDefault === 'string' ? desDefault.length > 0 : desDefault > 0
@@ -28,13 +35,24 @@ export const SelectField = React.forwardRef<HTMLSelectElement, SelectCProps>(({ 
         render={({ field: { onChange, onBlur, value } }) => {
           return (
             <>
-              <select id={id} onChange={onChange} ref={ref} value={value} className={error && 'error'} onBlur={onBlur} disabled={isDisabled}>
+              <select id={id} onChange={(value) => {
+                onChange(value)
+                handleChange(value, name);
+              }}
+                ref={ref}
+                value={value}
+                className={error && 'error'}
+                onBlur={(value) => {
+                  onBlur
+                  handleChange(value, name);
+                }}
+                disabled={isDisabled}>
                 {checkHasDes && <option value={''} className={value !== '' ? 'active' : ''} disabled>{desDefault}</option>}
                 {dataSelect.map((item, index) => (
                   <option key={index} value={item}>{item}</option>
                 ))}
               </select>
-              
+
             </>
           )
         }}

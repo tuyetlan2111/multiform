@@ -1,20 +1,20 @@
 'use client'
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { Modal } from "./modal";
 
 export default function BlockItem({ title, children, nameBlock }: { title: string, children: React.ReactNode, nameBlock?: string }) {
-  const { setValue } = useFormContext()
-  const refE = useRef<HTMLDivElement>(null)
-  const [show, setShow] = useState(false)
-  const update = (data: { message: any; }) => {
-    (async () => {
-        console.log("data", data.message)
-    })()
-}
+
+  const { formState: { errors } } = useFormContext()
+  const errFamily = errors.familyCard as any
+  useEffect(() => {
+    if (errFamily[0]?.meifirstName?.message !== '') {
+      
+    }
+  }, [])
   return (
     <>
-      <div className="block-title" ref={refE} >
+      <div className="block-title" >
         <div className="title">
           {title}
         </div>
